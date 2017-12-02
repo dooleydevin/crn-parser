@@ -10,7 +10,7 @@ tokens = ['SPECIES', 'REAL', 'INTEGER', 'PLUS', 'HYPHEN', 'ARROWTO',
           'ARROWFROM', 'EQUALS'] + list(reserved.values())
 
 def t_SPECIES(t):
-    r'[A-Za-z][^=\+-<># \t\n]+'
+    r'[A-Za-z][^=\+-<># \t\n]*'
     t.type = reserved.get(t.value, 'SPECIES')
     return t
 
@@ -85,7 +85,7 @@ def p_stmt_empty(p):
 
 def p_stmt_reaction(p):
     '''stmt : molecules HYPHEN number ARROWTO molecules
-            | molecules ARROWFROM number ARROWTO molecules
+            | molecules ARROWFROM number HYPHEN molecules
             | molecules HYPHEN ARROWTO molecules
             | molecules ARROWFROM HYPHEN molecules'''
     prod = p[len(p)-1]
@@ -122,7 +122,7 @@ def p_error(p):
 
 yacc.yacc()
 
-with open('examples/min_example.crn') as z:
+with open('examples/oscillator_example.crn') as z:
     y = z.read()
 
 ##lexer.input(y)
