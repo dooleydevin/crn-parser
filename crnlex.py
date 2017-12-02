@@ -6,8 +6,8 @@ reserved = {
     'TIME' : 'TIME'
     }
 
-tokens = ['SPECIES', 'INTEGER', 'REAL', 'PLUS', 'ARROWTO', 'ARROWFROM',
-          'EQUALS'] + list(reserved.values())
+tokens = ['SPECIES', 'REAL', 'INTEGER', 'PLUS', 'HYPHEN', 'ARROWTO',
+          'ARROWFROM', 'EQUALS'] + list(reserved.values())
 
 def t_SPECIES(t):
     r'[A-Za-z][^=\+-<># \t\n]+'
@@ -25,8 +25,9 @@ def t_INTEGER(t):
     return t
 
 t_PLUS = r'\+'
-t_ARROWTO = r'->'
-t_ARROWFROM = r'<-'
+t_HYPHEN = r'-'
+t_ARROWTO = r'>'
+t_ARROWFROM = r'<'
 t_EQUALS = r'='
 
 def t_COMMENT(t):
@@ -83,15 +84,19 @@ def p_stmt_empty(p):
     pass
 
 def p_stmt_reaction(p):
-    '''stmt : molecules ARROWTO molecules
-            | molecules ARROWFROM molecules'''
-    if p[1] == [] and p[3] == []:
+    '''stmt : molecules HYPHEN number ARROWTO molecules
+            | molecules ARROWFROM number ARROWTO molecules
+            | molecules HYPHEN ARROWTO molecules
+            | molecules ARROWFROM HYPHEN molecules'''
+    prod = p[len(p)-1]
+    rate = p[3] if len(p) == 6 else 1
+    if p[1] == [] and prod == []:
         print('Warning: empty -> empty rule defined')
-    if p[2] == '->':
-        reactions.append((p[1], p[3]))
+    if p[2] == '-':
+        reactions.append((p[1], prod, rate))
     else:
-        reactions.append((p[3], p[1]))
-    print(p[1],p[2],p[3])
+        reactions.append((prod, p[1], rate))
+    print(reactions[-1])
 
 def p_molecules_rule(p):
     '''molecules : molecule PLUS molecules
@@ -117,7 +122,7 @@ def p_error(p):
 
 yacc.yacc()
 
-with open('min_example.crn') as z:
+with open('examples/min_example.crn') as z:
     y = z.read()
 
 ##lexer.input(y)
