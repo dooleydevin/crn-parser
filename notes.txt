@@ -5,3 +5,5 @@ reactions[n][2] = rate constant of nth reaction
 species = dictionary of species name: number of particles
 
 rates[n] = current expected number of time steps for reaction n
+
+log = list of species concentrations for each step
