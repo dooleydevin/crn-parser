@@ -11,37 +11,37 @@ log = []
 time = 9000
 
 def do_step():
-  global reactions, rates, species, volume, log, tau
-  update_rates()
-  for i in xrange(0, len(rates)):
-	rate = rates[i]
-	if rate != -1:
-	  do_reaction(reactions[i], np.random.poisson(1/rates[i]))
-  log.append(species)
+    global reactions, rates, species, volume, log, tau
+    update_rates()
+    for i in range(0, len(rates)):
+        rate = rates[i]
+        if rate != -1:
+            do_reaction(reactions[i], np.random.poisson(1/rates[i]))
+    log.append(species)
 
 def do_reaction(reaction, n):
-  global species
-  for x in reaction[0].keys():
-	species[x] -= n * reaction[0][x]
-  for y in reaction[1].keys():
-	species[y] += n * reaction[1][y]
+    global species
+    for x in reaction[0].keys():
+        species[x] -= n * reaction[0][x]
+    for y in reaction[1].keys():
+        species[y] += n * reaction[1][y]
 
 def update_rates():
-  global species, reactions, rates, volume
-  for i in xrange(0, len(reactions)):
-	reaction = reactions[i]
-	rates[i] = reaction[2] 
-	for y in reaction[0].keys():
-	  for j in xrange(0, reaction[0][y]):
-		if species[y] - j > 0:
-		  rates[i] = float(rates[i]) / (species[y] - j)
-		  rates[i] *= volume
-		else:
-		  rates[i] = -1
+    global species, reactions, rates, volume
+    for i in range(0, len(reactions)):
+        reaction = reactions[i]
+        rates[i] = reaction[2] 
+        for y in reaction[0].keys():
+            for j in range(0, reaction[0][y]):
+                if species[y] - j > 0:
+                    rates[i] = float(rates[i]) / (species[y] - j)
+                    rates[i] *= volume
+                else:
+                    rates[i] = -1
 
 while (time > 0):
-  do_step()
-  time -= 1
+    do_step()
+    time -= 1
 
-print(species)
+print(log)
 # log is now full of species - graph it somehow
