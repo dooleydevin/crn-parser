@@ -3,26 +3,31 @@ import math
 import time
 import numpy as np
 
-reactions = []
-rates = []
-species = dict()
-volume = 1
+reactions = [[{'A': 1, 'B': 1}, {'B': 2}, 1], [{'B': 1, 'C': 1}, {'C': 2}, 1], [{'C': 1, 'A': 1}, {'A': 2}, 1]]
+rates = [1, 1, 1]
+species = {'A': 100, 'B': 100, 'C': 100}
+volume = 1000
 log = []
 time = 10000
 
 def do_step():
   global reactions, rates, species, volume, log, tau
   update_rates()
+  print(rates)
   for i in xrange(0, len(rates)):
-	  do_reaction(np.random.poisson(1/rates[i]))
+	rate = rates[i]
+	if rate != -1:
+	  do_reaction(reactions[i], np.random.poisson(1/rates[i]))
+  print(species)
   log.append(species)
 
-def do_reaction(n):
-  global reactions, species
+def do_reaction(reaction, n):
+  global species
   for x in reaction[0].keys():
+	print(species[x])
 	species[x] -= n * reaction[0][x]
   for y in reaction[1].keys():
-	species[x] += n * reaction[1][x]
+	species[y] += n * reaction[1][y]
 
 def update_rates():
   global species, reactions, rates, volume
@@ -31,8 +36,16 @@ def update_rates():
 	rates[i] = reaction[2] 
 	for y in reaction[0].keys():
 	  for j in xrange(0, reaction[0][y]):
-		rates[i] *= species[y] - j
-		rates[i] /= volume
+		if species[y] - j > 0:
+		  print(rates[i])
+		  print(species[y] - j)
+		  rates[i] = float(rates[i]) / (species[y] - j)
+		  print(rates[i])
+		  rates[i] *= volume
+		  print(rates[i])
+		else:
+		  print("not enough reactants")
+		  rates[i] = -1
 
 while (time > 0):
   do_step()
