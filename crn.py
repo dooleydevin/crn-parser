@@ -17,7 +17,6 @@ def do_step():
 	rate = rates[i]
 	if rate != -1:
 	  do_reaction(reactions[i], np.random.poisson(1/rates[i]))
-  print(species)
   log.append(species)
 
 def do_reaction(reaction, n):
