@@ -8,12 +8,11 @@ rates = [1, 1, 1]
 species = {'A': 100, 'B': 100, 'C': 100}
 volume = 1000
 log = []
-time = 10000
+time = 9000
 
 def do_step():
   global reactions, rates, species, volume, log, tau
   update_rates()
-  print(rates)
   for i in xrange(0, len(rates)):
 	rate = rates[i]
 	if rate != -1:
@@ -24,7 +23,6 @@ def do_step():
 def do_reaction(reaction, n):
   global species
   for x in reaction[0].keys():
-	print(species[x])
 	species[x] -= n * reaction[0][x]
   for y in reaction[1].keys():
 	species[y] += n * reaction[1][y]
@@ -37,18 +35,14 @@ def update_rates():
 	for y in reaction[0].keys():
 	  for j in xrange(0, reaction[0][y]):
 		if species[y] - j > 0:
-		  print(rates[i])
-		  print(species[y] - j)
 		  rates[i] = float(rates[i]) / (species[y] - j)
-		  print(rates[i])
 		  rates[i] *= volume
-		  print(rates[i])
 		else:
-		  print("not enough reactants")
 		  rates[i] = -1
 
 while (time > 0):
   do_step()
   time -= 1
 
+print(species)
 # log is now full of species - graph it somehow
