@@ -13,13 +13,13 @@ if (example == "oscillator"):
 
 # parity
 if (example == "parity"):
-  reactions = [[{'A': 2}, {}, 1]]
+  reactions = [[{'A': 2}, {}, .01]]
   species = {'A': 101}
   rates = [1]
 
 volume = 1000
 log = []
-time = 10000000
+time = 100000
 
 def do_step():
     global reactions, rates, species, volume, log, tau
