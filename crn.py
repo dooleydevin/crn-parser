@@ -3,12 +3,23 @@ import math
 import time
 import numpy as np
 
-reactions = [[{'A': 1, 'B': 1}, {'B': 2}, 1], [{'B': 1, 'C': 1}, {'C': 2}, 1], [{'C': 1, 'A': 1}, {'A': 2}, 1]]
-rates = [1, 1, 1]
-species = {'A': 100, 'B': 100, 'C': 100}
+example = "parity"
+
+# oscillator
+if (example == "oscillator"):
+  reactions = [[{'A': 1, 'B': 1}, {'B': 2}, 1], [{'B': 1, 'C': 1}, {'C': 2}, 1], [{'C': 1, 'A': 1}, {'A': 2}, 1]]
+  species = {'A': 100, 'B': 100, 'C': 100}
+  rates = [1, 1, 1]
+
+# parity
+if (example == "parity"):
+  reactions = [[{'A': 2}, {}, 1]]
+  species = {'A': 101}
+  rates = [1]
+
 volume = 1000
 log = []
-time = 9000
+time = 10000000
 
 def do_step():
     global reactions, rates, species, volume, log, tau
@@ -43,5 +54,5 @@ while (time > 0):
     do_step()
     time -= 1
 
-print(log)
+print(species)
 # log is now full of species - graph it somehow
