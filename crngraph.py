@@ -1,7 +1,11 @@
 import matplotlib.pyplot as plt
 
-fig, ax = plt.subplots()
+def graph(log):
+    fig, ax = plt.subplots()
 
-ax.set(xlabel='Time', ylabel='Concentration', title'')
-ax.grid()
-plt.show()
+    for specie in log.keys():
+        plt.plot(log[specie])
+
+    ax.set(xlabel='Time', ylabel='Concentration')
+    ax.grid()
+    plt.show()

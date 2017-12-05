@@ -3,7 +3,10 @@ import math
 import time
 import numpy as np
 
-example = "parity"
+from crngraph import graph
+
+example = "oscillator"
+global species
 
 # oscillator
 if (example == "oscillator"):
@@ -17,9 +20,9 @@ if (example == "parity"):
   species = {'A': 101}
   rates = [1]
 
-volume = 1000
-log = []
-time = 100000
+volume = 200
+log = {n: [] for n in species.keys()} 
+time = 1000
 
 def do_step():
     global reactions, rates, species, volume, log, tau
@@ -28,7 +31,10 @@ def do_step():
         rate = rates[i]
         if rate != -1:
             do_reaction(reactions[i], np.random.poisson(1/rates[i]))
-    log.append(species)
+
+    for specie in species.keys():
+        log[specie].append(species[specie])
+
 
 def do_reaction(reaction, n):
     global species
@@ -56,3 +62,5 @@ while (time > 0):
 
 print(species)
 # log is now full of species - graph it somehow
+print (log)
+graph(log)
