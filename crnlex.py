@@ -55,7 +55,6 @@ def p_stmt_concentration(p):
     'stmt : SPECIES EQUALS number'
     if p[1] in concentrations:
         print('Warning: concentration for %s redefined' %p[1])
-    print('Setting concentration for',p[1],'to',p[3])
     concentrations[p[1]] = p[3]
 
 def p_stmt_volume(p):
@@ -63,7 +62,6 @@ def p_stmt_volume(p):
     global volume
     if volume != 0:
         print('Warning: volume redefined')
-    print('setting volume')
     volume = float(p[3])
 
 def p_stmt_time(p):
@@ -71,7 +69,6 @@ def p_stmt_time(p):
     global time
     if time != 0:
         print('Warning: time redefined')
-    print('setting time')
     time = float(p[3])
 
 def p_number(p):
@@ -96,18 +93,21 @@ def p_stmt_reaction(p):
         reactions.append((p[1], prod, rate))
     else:
         reactions.append((prod, p[1], rate))
-    print(reactions[-1])
 
 def p_molecules_rule(p):
     '''molecules : molecule PLUS molecules
                  | molecule
                  | '''
     if len(p) == 4:
-        p[0] = p[3] + [p[1]]
+        p[0] = dict(p[3])
+        if p[1][1] in p[3]:
+            p[0][p[1][1]] += p[1][0]
+        else:
+            p[0][p[1][1]] = p[1][0]
     elif len(p) == 2:
-        p[0] = [p[1]]
+        p[0] = {p[1][1] : p[1][0]}
     else:
-        p[0] = []
+        p[0] = {}
 
 def p_molecule_rule(p):
     '''molecule : INTEGER SPECIES
@@ -125,11 +125,10 @@ yacc.yacc()
 with open('examples/oscillator_example.crn') as z:
     y = z.read()
 
-##lexer.input(y)
-##x = lexer.token()
-##while x != None:
-##    print(x)
-##    x = lexer.token()
-
 for line in y.split('\n'):
     yacc.parse(line)
+
+print(concentrations)
+print(reactions)
+print(volume)
+print(time)
