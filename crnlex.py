@@ -50,6 +50,7 @@ volume = 0
 time = 0
 concentrations = {}
 reactions = []
+error = False
 
 def p_stmt_concentration(p):
     'stmt : SPECIES EQUALS number'
@@ -118,17 +119,30 @@ def p_molecule_rule(p):
         p[0] = (1,p[1])
 
 def p_error(p):
-    print("Syntax error at '%s'" %p.value)
+    global error
+    if p:
+        print("Syntax error at '%s'" %p.value)
+    else:
+        print("Syntax error at EOF")
+    error = True
 
 yacc.yacc()
 
-with open('examples/oscillator_example.crn') as z:
-    y = z.read()
-
-for line in y.split('\n'):
-    yacc.parse(line)
-
-print(concentrations)
-print(reactions)
-print(volume)
-print(time)
+''' Returns True if successfully parsed, False otherwise '''
+def crnlex(filename):
+    global concentrations, reactions, volume, time, error
+    concentrations = {}
+    reactions = []
+    volume = 0
+    time = 0
+    error = False
+    with open(filename) as z:
+        for line in z.readlines():
+            yacc.parse(line)
+            if error: return False
+    # hookup here
+    print(concentrations)
+    print(reactions)
+    print(volume)
+    print(time)
+    return True
