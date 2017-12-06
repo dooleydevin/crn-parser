@@ -60,18 +60,18 @@ def p_stmt_concentration(p):
     concentrations[p[1]] = p[3]
 
 def p_stmt_volume(p):
-    'stmt : VOLUME EQUALS number'
+    'stmt : VOLUME EQUALS INTEGER'
     global volume
     if volume != 0:
         print('Warning: volume redefined')
-    volume = float(p[3])
+    volume = int(p[3])
 
 def p_stmt_time(p):
-    'stmt : TIME EQUALS number'
+    'stmt : TIME EQUALS INTEGER'
     global time
     if time != 0:
         print('Warning: time redefined')
-    time = float(p[3])
+    time = int(p[3])
 
 def p_number(p):
     '''number : REAL
@@ -141,5 +141,11 @@ def crnlex(filename):
         for line in z.readlines():
             yacc.parse(line)
             if error: return False
+    if time == 0:
+        # fixme: default value probably better
+        print('Time not defined; please set the value TIME to an integer')
+    if volume == 0:
+        # fixme: default value probably better
+        print('Volume not defined; please set the value VOLUME to an integer')
     crn.crn(reactions, concentrations, volume, time)
     return True
