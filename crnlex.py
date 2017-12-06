@@ -1,5 +1,6 @@
 import ply.lex as lex
 import ply.yacc as yacc
+import crn
 
 reserved = {
     'VOLUME' : 'VOLUME',
@@ -140,9 +141,5 @@ def crnlex(filename):
         for line in z.readlines():
             yacc.parse(line)
             if error: return False
-    # hookup here
-    print(concentrations)
-    print(reactions)
-    print(volume)
-    print(time)
+    crn.crn(reactions, concentrations, volume, time)
     return True
