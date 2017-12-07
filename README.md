@@ -12,6 +12,12 @@ VOLUME = 50000
 TIME = 10000
 ```
 
+The software also supports some optional parameters. To use a deterministic rather than stochastic model, supply the keyword DETERMINISTIC by itself on a line:
+
+```
+DETERMINISTIC
+```
+
 ## Species
 A species is defined as a string of characters of any form, excluding the use of '-', '+', '#', '<' and '>' characters. Species must be set to some initial value prior to any reactions containing them. An example is given below.
 

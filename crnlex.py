@@ -4,7 +4,8 @@ import crn
 
 reserved = {
     'VOLUME' : 'VOLUME',
-    'TIME' : 'TIME'
+    'TIME' : 'TIME',
+    'DETERMINISTIC' : 'DETERMINISTIC',
     }
 
 tokens = ['SPECIES', 'REAL', 'INTEGER', 'PLUS', 'HYPHEN', 'ARROWTO',
@@ -49,6 +50,7 @@ lexer = lex.lex()
 
 volume = 0
 time = 0
+deterministic = False
 concentrations = {}
 reactions = []
 error = False
@@ -72,6 +74,11 @@ def p_stmt_time(p):
     if time != 0:
         print('Warning: time redefined')
     time = int(p[3])
+
+def p_stmt_deterministic(p):
+    'stmt : DETERMINISTIC'
+    global deterministic
+    deterministic = True
 
 def p_number(p):
     '''number : REAL
@@ -144,8 +151,10 @@ def crnlex(filename):
     if time == 0:
         # fixme: default value probably better
         print('Time not defined; please set the value TIME to an integer')
+        return False
     if volume == 0:
         # fixme: default value probably better
         print('Volume not defined; please set the value VOLUME to an integer')
-    crn.crn(reactions, concentrations, volume, time)
+        return False
+    crn.crn(reactions, concentrations, volume, time, deterministic)
     return True

@@ -33,13 +33,16 @@ def graph(log):
     ax.grid()
     plt.show()
 
-def crn(reactions, species, volume, time):
+def crn(reactions, species, volume, time, deterministic):
     log = {n: [] for n in species.keys()}
     while (time > 0):
         for i in reactions:
             rate = get_reaction_rate(i, species, volume)
             if rate != -1:
-                do_reaction(i, np.random.poisson(1/rate), species)
+                if deterministic:
+                    do_reaction(i, 1/rate, species)
+                else:
+                    do_reaction(i, np.random.poisson(1/rate), species)
 
         for specie in species.keys():
             log[specie].append(species[specie])

@@ -1,9 +1,10 @@
 # Set molecule counts
 VOLUME = 500
-TIME = 10000
-A = 100
+TIME = 5000
+DETERMINISTIC
+A = 130
 B = 100
-C = 100
+C = 70
 
 # Build the whatever oscillator
 A + B -0.1> 2B
