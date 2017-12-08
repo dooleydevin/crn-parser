@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import ply.lex as lex
 import ply.yacc as yacc
 import crn
@@ -158,3 +159,11 @@ def crnlex(filename):
         return False
     crn.crn(reactions, concentrations, volume, time, deterministic)
     return True
+
+if __name__ == '__main__':
+    import sys
+    if len(sys.argv) < 2:
+        print('No filename supplied')
+        exit(1)
+    if crnlex(sys.argv[1]): exit(0)
+    exit(1)
