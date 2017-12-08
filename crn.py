@@ -47,4 +47,5 @@ def crn(reactions, species, volume, time, deterministic):
         for specie in species.keys():
             log[specie].append(species[specie])
         time -= 1
+    print(species)
     graph(log)
