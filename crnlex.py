@@ -6,6 +6,7 @@ import crn
 reserved = {
     'VOLUME' : 'VOLUME',
     'TIME' : 'TIME',
+    'TIMEDIFF' : 'TIMEDIFF',
     'DETERMINISTIC' : 'DETERMINISTIC',
     }
 
@@ -51,6 +52,7 @@ lexer = lex.lex()
 
 volume = 0
 time = 0
+dt = 0
 deterministic = False
 concentrations = {}
 reactions = []
@@ -66,15 +68,22 @@ def p_stmt_volume(p):
     'stmt : VOLUME EQUALS INTEGER'
     global volume
     if volume != 0:
-        print('Warning: volume redefined')
+        print('Warning: VOLUME redefined')
     volume = int(p[3])
 
 def p_stmt_time(p):
-    'stmt : TIME EQUALS INTEGER'
+    'stmt : TIME EQUALS number'
     global time
     if time != 0:
-        print('Warning: time redefined')
-    time = int(p[3])
+        print('Warning: TIME redefined')
+    time = p[3]
+
+def p_stmt_dt(p):
+    'stmt : TIMEDIFF EQUALS number'
+    global dt
+    if dt != 0:
+        print('Warning: TIMEDIFF redefined')
+    dt = p[3]
 
 def p_stmt_deterministic(p):
     'stmt : DETERMINISTIC'
@@ -139,11 +148,13 @@ yacc.yacc()
 
 ''' Returns True if successfully parsed, False otherwise '''
 def crnlex(filename):
-    global concentrations, reactions, volume, time, error
+    global concentrations, reactions, volume, time, dt, deterministic, error
     concentrations = {}
     reactions = []
     volume = 0
     time = 0
+    dt = 1
+    deterministic = False
     error = False
     with open(filename) as z:
         for line in z.readlines():
@@ -157,7 +168,7 @@ def crnlex(filename):
         # fixme: default value probably better
         print('Volume not defined; please set the value VOLUME to an integer')
         return False
-    crn.crn(reactions, concentrations, volume, time, deterministic)
+    crn.crn(reactions, concentrations, volume, time, dt, deterministic)
     return True
 
 if __name__ == '__main__':

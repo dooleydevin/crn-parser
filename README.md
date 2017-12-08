@@ -8,11 +8,18 @@ This project was written in Python3, and outside of the packages included standa
 ## Parameters
 A CRN file requires a total volume and a time-frame to be defined in order to simulate the given CRN. The volume and time-frame are set by setting the `VOLUME` and `TIME` variables to some integer values, respectively. An example is given below.
 
-Volume is measured in molecules. Time measures the number of calculations made (i.e. the granularity is 1 unit).
+Volume is measured in molecules. Time is measured in seconds.
 
 ```
 VOLUME = 50000
 TIME = 10000
+```
+
+By default, the program makes 1 calculation per second, but this can be increased or decreased by setting the TIMEDIFF parameter. For example, the following parameters will cause the program to make 500 calculations:
+
+```
+TIME = 5000
+TIMEDIFF = 10
 ```
 
 The software also supports some optional parameters. To use a deterministic rather than stochastic model, supply the keyword `DETERMINISTIC` by itself on a line:
