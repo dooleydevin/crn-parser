@@ -1,5 +1,5 @@
-VOLUME = 3000
-TIME = 10000
+VOLUME = 30000
+TIME = 100000
 X = 1000
 Y = 1200
 #DETERMINISTIC
@@ -7,9 +7,9 @@ Z = 0
 A = 0
 B = 0
 
-X + Y -0.1> 2Z
-X + Z -0.1> 2X + A
-Y + Z -0.1> 2Y + B
-2X + A + Y -0.1> X + Y + Z
-2Y + B + X -0.1> X + Y + Z
+X + Y -0.01> 2Z
+X + Z -0.01> 2X + A
+Y + Z -0.01> 2Y + B
+2X + A + Y -0.01> X + Y + Z
+2Y + B + X -0.01> X + Y + Z
 
