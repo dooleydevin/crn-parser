@@ -12,7 +12,7 @@ def do_reaction(reaction, n, species):
         species[y] += n * reaction[1][y]
 
 def get_reaction_rate(reaction, species, volume):
-    rate = reaction[2] / 10
+    rate = reaction[2]
     for y in reaction[0]:
         for j in range(reaction[0][y]):
             if species[y] - j > 0:
