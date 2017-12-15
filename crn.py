@@ -36,7 +36,8 @@ def graph(t, log):
 def crn(reactions, species, volume, time, dt, deterministic):
     log = {n: [] for n in species.keys()}
     t = np.arange(0, time, dt)
-    for tick in t:
+    for tick in t: 
+      if (sum(species.values()) < volume):
         for i in reactions:
             rate = get_reaction_rate(i, species, volume)
             if rate != -1:
@@ -45,7 +46,7 @@ def crn(reactions, species, volume, time, dt, deterministic):
                 else:
                     do_reaction(i, np.random.poisson(dt/rate), species)
 
-        for specie in species.keys():
+      for specie in species.keys():
             log[specie].append(species[specie])
     print(species)
     graph(t, log)
