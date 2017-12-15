@@ -15,7 +15,7 @@ VOLUME = 50000
 TIME = 10000
 ```
 
-By default, the program makes 1 calculation per second, but this can be increased or decreased by setting the TIMEDIFF parameter. For example, the following parameters will cause the program to make 500 calculations:
+By default, rates are recalculated once per second, but this can be increased or decreased by setting the TIMEDIFF parameter. For example, the following parameters will cause the program to make 500 recalculations:
 
 ```
 TIME = 5000
@@ -29,25 +29,25 @@ DETERMINISTIC
 ```
 
 ## Species
-A species is defined as a string of characters of any form, excluding the use of `-`, `+`, `#`, `<` and `>` characters. Species must be set to some initial value prior to any reactions containing them. An example is given below:
+A species is defined as a string of alphabetic characters. Species must be set to some initial value prior to any reactions containing them. An example is given below:
 
 ```
 ALPHA = 500
 BETA = 200
-ALPHA_2 = 700
+ALPHATWO = 700
 ```
 
 ## Reactions
 Reactions are of a standard form, with species separated by `+` symbols on either side of an arrow, denoted `->`:
 
 ```
-ALPHA + BETA -> ALPHA_2
+ALPHA + BETA -> ALPHATWO
 ```
 
 Reactions with zero or more reactants and products are accepted. To change the rate of a reaction, include an integer or floating point value for the rate in-between the `-` and `>` characters. All rates default to the value 1. If we wanted to take the above example and change the rate of the reaction to 20, it would be done like so:
 
 ```
-ALPHA + BETA -20> ALPHA_2
+ALPHA + BETA -20> ALPHATWO
 ```
 
 ## Comments

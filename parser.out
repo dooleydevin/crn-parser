@@ -1,0 +1,419 @@
+Created by PLY version 3.10 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> stmt
+Rule 1     stmt -> SPECIES EQUALS number
+Rule 2     stmt -> VOLUME EQUALS INTEGER
+Rule 3     stmt -> TIME EQUALS number
+Rule 4     stmt -> TIMEDIFF EQUALS number
+Rule 5     stmt -> DETERMINISTIC
+Rule 6     number -> REAL
+Rule 7     number -> INTEGER
+Rule 8     stmt -> <empty>
+Rule 9     stmt -> molecules HYPHEN number ARROWTO molecules
+Rule 10    stmt -> molecules ARROWFROM number HYPHEN molecules
+Rule 11    stmt -> molecules HYPHEN ARROWTO molecules
+Rule 12    stmt -> molecules ARROWFROM HYPHEN molecules
+Rule 13    molecules -> molecule PLUS molecules
+Rule 14    molecules -> molecule
+Rule 15    molecules -> <empty>
+Rule 16    molecule -> INTEGER SPECIES
+Rule 17    molecule -> SPECIES
+
+Terminals, with rules where they appear
+
+ARROWFROM            : 10 12
+ARROWTO              : 9 11
+DETERMINISTIC        : 5
+EQUALS               : 1 2 3 4
+HYPHEN               : 9 10 11 12
+INTEGER              : 2 7 16
+PLUS                 : 13
+REAL                 : 6
+SPECIES              : 1 16 17
+TIME                 : 3
+TIMEDIFF             : 4
+VOLUME               : 2
+error                : 
+
+Nonterminals, with rules where they appear
+
+molecule             : 13 14
+molecules            : 9 9 10 10 11 11 12 12 13
+number               : 1 3 4 9 10
+stmt                 : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . stmt
+    (1) stmt -> . SPECIES EQUALS number
+    (2) stmt -> . VOLUME EQUALS INTEGER
+    (3) stmt -> . TIME EQUALS number
+    (4) stmt -> . TIMEDIFF EQUALS number
+    (5) stmt -> . DETERMINISTIC
+    (8) stmt -> .
+    (9) stmt -> . molecules HYPHEN number ARROWTO molecules
+    (10) stmt -> . molecules ARROWFROM number HYPHEN molecules
+    (11) stmt -> . molecules HYPHEN ARROWTO molecules
+    (12) stmt -> . molecules ARROWFROM HYPHEN molecules
+    (13) molecules -> . molecule PLUS molecules
+    (14) molecules -> . molecule
+    (15) molecules -> .
+    (16) molecule -> . INTEGER SPECIES
+    (17) molecule -> . SPECIES
+
+    SPECIES         shift and go to state 2
+    VOLUME          shift and go to state 3
+    TIME            shift and go to state 5
+    TIMEDIFF        shift and go to state 6
+    DETERMINISTIC   shift and go to state 7
+    $end            reduce using rule 8 (stmt -> .)
+    HYPHEN          reduce using rule 15 (molecules -> .)
+    ARROWFROM       reduce using rule 15 (molecules -> .)
+    INTEGER         shift and go to state 4
+
+    stmt                           shift and go to state 1
+    molecules                      shift and go to state 8
+    molecule                       shift and go to state 9
+
+state 1
+
+    (0) S' -> stmt .
+
+
+
+state 2
+
+    (1) stmt -> SPECIES . EQUALS number
+    (17) molecule -> SPECIES .
+
+    EQUALS          shift and go to state 10
+    PLUS            reduce using rule 17 (molecule -> SPECIES .)
+    HYPHEN          reduce using rule 17 (molecule -> SPECIES .)
+    ARROWFROM       reduce using rule 17 (molecule -> SPECIES .)
+
+
+state 3
+
+    (2) stmt -> VOLUME . EQUALS INTEGER
+
+    EQUALS          shift and go to state 11
+
+
+state 4
+
+    (16) molecule -> INTEGER . SPECIES
+
+    SPECIES         shift and go to state 12
+
+
+state 5
+
+    (3) stmt -> TIME . EQUALS number
+
+    EQUALS          shift and go to state 13
+
+
+state 6
+
+    (4) stmt -> TIMEDIFF . EQUALS number
+
+    EQUALS          shift and go to state 14
+
+
+state 7
+
+    (5) stmt -> DETERMINISTIC .
+
+    $end            reduce using rule 5 (stmt -> DETERMINISTIC .)
+
+
+state 8
+
+    (9) stmt -> molecules . HYPHEN number ARROWTO molecules
+    (10) stmt -> molecules . ARROWFROM number HYPHEN molecules
+    (11) stmt -> molecules . HYPHEN ARROWTO molecules
+    (12) stmt -> molecules . ARROWFROM HYPHEN molecules
+
+    HYPHEN          shift and go to state 15
+    ARROWFROM       shift and go to state 16
+
+
+state 9
+
+    (13) molecules -> molecule . PLUS molecules
+    (14) molecules -> molecule .
+
+    PLUS            shift and go to state 17
+    HYPHEN          reduce using rule 14 (molecules -> molecule .)
+    ARROWFROM       reduce using rule 14 (molecules -> molecule .)
+    $end            reduce using rule 14 (molecules -> molecule .)
+
+
+state 10
+
+    (1) stmt -> SPECIES EQUALS . number
+    (6) number -> . REAL
+    (7) number -> . INTEGER
+
+    REAL            shift and go to state 19
+    INTEGER         shift and go to state 20
+
+    number                         shift and go to state 18
+
+state 11
+
+    (2) stmt -> VOLUME EQUALS . INTEGER
+
+    INTEGER         shift and go to state 21
+
+
+state 12
+
+    (16) molecule -> INTEGER SPECIES .
+
+    PLUS            reduce using rule 16 (molecule -> INTEGER SPECIES .)
+    HYPHEN          reduce using rule 16 (molecule -> INTEGER SPECIES .)
+    ARROWFROM       reduce using rule 16 (molecule -> INTEGER SPECIES .)
+    $end            reduce using rule 16 (molecule -> INTEGER SPECIES .)
+
+
+state 13
+
+    (3) stmt -> TIME EQUALS . number
+    (6) number -> . REAL
+    (7) number -> . INTEGER
+
+    REAL            shift and go to state 19
+    INTEGER         shift and go to state 20
+
+    number                         shift and go to state 22
+
+state 14
+
+    (4) stmt -> TIMEDIFF EQUALS . number
+    (6) number -> . REAL
+    (7) number -> . INTEGER
+
+    REAL            shift and go to state 19
+    INTEGER         shift and go to state 20
+
+    number                         shift and go to state 23
+
+state 15
+
+    (9) stmt -> molecules HYPHEN . number ARROWTO molecules
+    (11) stmt -> molecules HYPHEN . ARROWTO molecules
+    (6) number -> . REAL
+    (7) number -> . INTEGER
+
+    ARROWTO         shift and go to state 25
+    REAL            shift and go to state 19
+    INTEGER         shift and go to state 20
+
+    number                         shift and go to state 24
+
+state 16
+
+    (10) stmt -> molecules ARROWFROM . number HYPHEN molecules
+    (12) stmt -> molecules ARROWFROM . HYPHEN molecules
+    (6) number -> . REAL
+    (7) number -> . INTEGER
+
+    HYPHEN          shift and go to state 27
+    REAL            shift and go to state 19
+    INTEGER         shift and go to state 20
+
+    number                         shift and go to state 26
+
+state 17
+
+    (13) molecules -> molecule PLUS . molecules
+    (13) molecules -> . molecule PLUS molecules
+    (14) molecules -> . molecule
+    (15) molecules -> .
+    (16) molecule -> . INTEGER SPECIES
+    (17) molecule -> . SPECIES
+
+    HYPHEN          reduce using rule 15 (molecules -> .)
+    ARROWFROM       reduce using rule 15 (molecules -> .)
+    $end            reduce using rule 15 (molecules -> .)
+    INTEGER         shift and go to state 4
+    SPECIES         shift and go to state 29
+
+    molecule                       shift and go to state 9
+    molecules                      shift and go to state 28
+
+state 18
+
+    (1) stmt -> SPECIES EQUALS number .
+
+    $end            reduce using rule 1 (stmt -> SPECIES EQUALS number .)
+
+
+state 19
+
+    (6) number -> REAL .
+
+    $end            reduce using rule 6 (number -> REAL .)
+    ARROWTO         reduce using rule 6 (number -> REAL .)
+    HYPHEN          reduce using rule 6 (number -> REAL .)
+
+
+state 20
+
+    (7) number -> INTEGER .
+
+    $end            reduce using rule 7 (number -> INTEGER .)
+    ARROWTO         reduce using rule 7 (number -> INTEGER .)
+    HYPHEN          reduce using rule 7 (number -> INTEGER .)
+
+
+state 21
+
+    (2) stmt -> VOLUME EQUALS INTEGER .
+
+    $end            reduce using rule 2 (stmt -> VOLUME EQUALS INTEGER .)
+
+
+state 22
+
+    (3) stmt -> TIME EQUALS number .
+
+    $end            reduce using rule 3 (stmt -> TIME EQUALS number .)
+
+
+state 23
+
+    (4) stmt -> TIMEDIFF EQUALS number .
+
+    $end            reduce using rule 4 (stmt -> TIMEDIFF EQUALS number .)
+
+
+state 24
+
+    (9) stmt -> molecules HYPHEN number . ARROWTO molecules
+
+    ARROWTO         shift and go to state 30
+
+
+state 25
+
+    (11) stmt -> molecules HYPHEN ARROWTO . molecules
+    (13) molecules -> . molecule PLUS molecules
+    (14) molecules -> . molecule
+    (15) molecules -> .
+    (16) molecule -> . INTEGER SPECIES
+    (17) molecule -> . SPECIES
+
+    $end            reduce using rule 15 (molecules -> .)
+    INTEGER         shift and go to state 4
+    SPECIES         shift and go to state 29
+
+    molecules                      shift and go to state 31
+    molecule                       shift and go to state 9
+
+state 26
+
+    (10) stmt -> molecules ARROWFROM number . HYPHEN molecules
+
+    HYPHEN          shift and go to state 32
+
+
+state 27
+
+    (12) stmt -> molecules ARROWFROM HYPHEN . molecules
+    (13) molecules -> . molecule PLUS molecules
+    (14) molecules -> . molecule
+    (15) molecules -> .
+    (16) molecule -> . INTEGER SPECIES
+    (17) molecule -> . SPECIES
+
+    $end            reduce using rule 15 (molecules -> .)
+    INTEGER         shift and go to state 4
+    SPECIES         shift and go to state 29
+
+    molecules                      shift and go to state 33
+    molecule                       shift and go to state 9
+
+state 28
+
+    (13) molecules -> molecule PLUS molecules .
+
+    HYPHEN          reduce using rule 13 (molecules -> molecule PLUS molecules .)
+    ARROWFROM       reduce using rule 13 (molecules -> molecule PLUS molecules .)
+    $end            reduce using rule 13 (molecules -> molecule PLUS molecules .)
+
+
+state 29
+
+    (17) molecule -> SPECIES .
+
+    PLUS            reduce using rule 17 (molecule -> SPECIES .)
+    HYPHEN          reduce using rule 17 (molecule -> SPECIES .)
+    ARROWFROM       reduce using rule 17 (molecule -> SPECIES .)
+    $end            reduce using rule 17 (molecule -> SPECIES .)
+
+
+state 30
+
+    (9) stmt -> molecules HYPHEN number ARROWTO . molecules
+    (13) molecules -> . molecule PLUS molecules
+    (14) molecules -> . molecule
+    (15) molecules -> .
+    (16) molecule -> . INTEGER SPECIES
+    (17) molecule -> . SPECIES
+
+    $end            reduce using rule 15 (molecules -> .)
+    INTEGER         shift and go to state 4
+    SPECIES         shift and go to state 29
+
+    molecules                      shift and go to state 34
+    molecule                       shift and go to state 9
+
+state 31
+
+    (11) stmt -> molecules HYPHEN ARROWTO molecules .
+
+    $end            reduce using rule 11 (stmt -> molecules HYPHEN ARROWTO molecules .)
+
+
+state 32
+
+    (10) stmt -> molecules ARROWFROM number HYPHEN . molecules
+    (13) molecules -> . molecule PLUS molecules
+    (14) molecules -> . molecule
+    (15) molecules -> .
+    (16) molecule -> . INTEGER SPECIES
+    (17) molecule -> . SPECIES
+
+    $end            reduce using rule 15 (molecules -> .)
+    INTEGER         shift and go to state 4
+    SPECIES         shift and go to state 29
+
+    molecules                      shift and go to state 35
+    molecule                       shift and go to state 9
+
+state 33
+
+    (12) stmt -> molecules ARROWFROM HYPHEN molecules .
+
+    $end            reduce using rule 12 (stmt -> molecules ARROWFROM HYPHEN molecules .)
+
+
+state 34
+
+    (9) stmt -> molecules HYPHEN number ARROWTO molecules .
+
+    $end            reduce using rule 9 (stmt -> molecules HYPHEN number ARROWTO molecules .)
+
+
+state 35
+
+    (10) stmt -> molecules ARROWFROM number HYPHEN molecules .
+
+    $end            reduce using rule 10 (stmt -> molecules ARROWFROM number HYPHEN molecules .)
+
