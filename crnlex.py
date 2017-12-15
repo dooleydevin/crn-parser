@@ -153,7 +153,7 @@ def crnlex(filename):
     reactions = []
     volume = 0
     time = 0
-    dt = 1
+    dt = 0
     deterministic = False
     error = False
     with open(filename) as z:
@@ -168,6 +168,7 @@ def crnlex(filename):
         # fixme: default value probably better
         print('Volume not defined; please set the value VOLUME to an integer')
         return False
+    if dt == 0: dt = 1
     crn.crn(reactions, concentrations, volume, time, dt, deterministic)
     return True
 
